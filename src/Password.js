@@ -18,9 +18,15 @@ function Password() {
 
   return (
     <div>
-      <div>{password}</div>
+      <input 
+      type="text"
+      onChange={(e) => setPassword(e.target.value)}
+      value={password}
+      />
       <div>
-        <button onClick={() => generatePassword(setPassword)}>Generate</button>
+        <button onClick={(e) => {
+          generatePassword(setPassword)
+          }}>Generate</button>
       </div>
     </div>
   );
