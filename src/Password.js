@@ -1,40 +1,38 @@
 import { useState } from 'react'
-
-//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/charAt
-
-function generatePassword(setPassword, setName) {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let password = '';
-  //write a function that generates a string of 8 random characters.
-  for (let i = 0; i < 8; i++) {
-    password += characters.charAt(Math.floor(Math.random() * characters.length));
-  }
-  //Your random password should display in the component when you press the "Generate" button. This will happen automatically by calling:
-  setPassword(password);
-  setName('Pets first name');
-}
+import { useDispatch } from 'react-redux'
+import { addPassword } from './features/passwords/passwordsSlice'
 
 function Password() {
+  const dispatch = useDispatch()
   const [password, setPassword] = useState('');
-  const [name, setName] = useState(' ');
+  const [name, setName] = useState('');
+
+  function generatePassword() {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let password = '';
+    for (let i = 0; i < 8; i++) {
+      password += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    setPassword(password);
+    setName('');
+  }
 
   return (
-    <div>
+    <div className="form">
       <input 
-      type="text"
-      onChange={(e) => setPassword(e.target.value)}
-      value={password}
+        type="text"
+        onChange={(e) => setPassword(e.target.value)}
+        value={password}
       />
       <input
-      type="text"
-      onChange={(e) => setName(e.target.value)}
-      value={name}
+        type="text"
+        onChange={(e) => setName(e.target.value)}
+        value={name}
       />
       <div>
-        <button onClick={(e) => {
-          generatePassword(setPassword, setName)
-          }}>Generate</button>
+        <button onClick={() => generatePassword()}>Generate</button>
       </div>
+      <button onClick={() => dispatch(addPassword({ password, name }))}>Save</button>
     </div>
   );
 }
