@@ -11,7 +11,7 @@ function generatePassword(setPassword, setName) {
   }
   //Your random password should display in the component when you press the "Generate" button. This will happen automatically by calling:
   setPassword(password);
-  setName('');
+  setName('Pets first name');
 }
 
 function Password() {
